@@ -18,6 +18,9 @@ MuseScore {
         const cursor = curScore.newCursor();
         cursor.rewind(Cursor.SCORE_START);
         const initialTempoBpm = Math.round(cursor.tempo * 60);
+        const originalTimeSig = cursor.measure.timesigNominal;
+        const originalNumerator = originalTimeSig.numerator;
+        const originalDenominator = originalTimeSig.denominator;
 
         curScore.startCmd();
         try {
@@ -34,11 +37,21 @@ MuseScore {
                 cmd("insert-measure");
             }
 
+            // The original first measure is now measure 3. Restore its meter
+            // there before setting the two newly inserted measures to 4/4.
+            cursor.rewind(Cursor.SCORE_START);
+            cursor.nextMeasure();
+            cursor.nextMeasure();
+            const restoredTimeSig = newElement(Element.TIMESIG);
+            restoredTimeSig.timesig = fraction(originalNumerator, originalDenominator);
+            cursor.add(restoredTimeSig);
+
             cursor.rewind(Cursor.SCORE_START);
             const timeSig = newElement(Element.TIMESIG);
             timeSig.timesig = fraction(4, 4);
             cursor.add(timeSig);
 
+            cursor.rewind(Cursor.SCORE_START);
             const tempoText = newElement(Element.TEMPO_TEXT);
             tempoText.text = "♩ = " + initialTempoBpm;
             tempoText.tempo = initialTempoBpm / 60.0;
