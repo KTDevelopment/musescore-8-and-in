@@ -19,7 +19,7 @@ Die Part-Dateien verwenden den von MuseScore im Stimmauszug hinterlegten Namen. 
 
 ## Installation
 
-1. `BulkExport.qml` in den MuseScore-Plugin-Ordner kopieren.
+1. `8AndIn.qml` in den MuseScore-Plugin-Ordner kopieren.
 2. MuseScore Studio neu starten.
 3. Im Plugin-Manager **Bulk export** aktivieren und anschließend über **Plugins → Bulk export** starten.
 
