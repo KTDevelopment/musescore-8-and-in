@@ -10,6 +10,7 @@ MuseScore {
 
     onRun: {
         if (!curScore) {
+            quit();
             return;
         }
 
@@ -30,7 +31,11 @@ MuseScore {
             for (let i = 0; i < 2; ++i) {
                 cursor.rewind(Cursor.SCORE_START);
                 const firstElement = cursor.element;
-                if (!firstElement || !curScore.selection.select(firstElement)) {
+                let selectableElement = firstElement;
+                if (firstElement && firstElement.type === Element.CHORD && firstElement.notes.length > 0) {
+                    selectableElement = firstElement.notes[0];
+                }
+                if (!selectableElement || !curScore.selection.select(selectableElement)) {
                     console.warn("Could not select the first score element; stopped after " + i + " inserted measures.");
                     break;
                 }
@@ -60,7 +65,8 @@ MuseScore {
             curScore.endCmd();
         }
 
-        // A dialog plugin closes by returning from onRun; Qt.quit() can
-        // terminate MuseScore 4 itself.
+        // Close this plugin after the undoable score command has finished.
+        // In MuseScore 4, quit() closes the plugin; Qt.quit() may close MuseScore.
+        quit();
     }
 }
