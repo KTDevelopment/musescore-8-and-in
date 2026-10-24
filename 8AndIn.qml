@@ -1,21 +1,25 @@
 import QtQuick 2.15
 import MuseScore 3.0
+import Muse.UiComponents
 
 MuseScore {
     id: root
+    width: 360
+    height: 140
+    title: "Einzählen einfügen"
+
     menuPath: "Plugins.2 Takte und Tempo am Anfang"
-    description: "Fügt zwei Takte am Anfang ein und setzt dort das bisherige Anfangstempo."
+    description: "Fügt zwei 4/4-Takte und das bisherige Anfangstempo ein."
     version: "1.0"
     pluginType: "dialog"
 
-    onRun: {
+    function insertCountIn() {
         if (!curScore) {
             quit();
             return;
         }
 
-        // Save the tempo before inserting measures; cursor.tempo is in
-        // quarter notes per second in the MuseScore plugin API.
+        // Cursor tempo is expressed in quarter notes per second.
         const cursor = curScore.newCursor();
         cursor.rewind(Cursor.SCORE_START);
         const initialTempoBpm = Math.round(cursor.tempo * 60);
@@ -25,9 +29,8 @@ MuseScore {
 
         curScore.startCmd();
         try {
-            // The command needs a selected element. Inserting a measure can
-            // change or clear the selection, so select the first element again
-            // before each insertion.
+            // The insert command needs a selected element. The selection may
+            // change after insertion, so select the first element each time.
             for (let i = 0; i < 2; ++i) {
                 cursor.rewind(Cursor.SCORE_START);
                 const firstElement = cursor.element;
@@ -42,8 +45,8 @@ MuseScore {
                 cmd("insert-measure");
             }
 
-            // The original first measure is now measure 3. Restore its meter
-            // there before setting the two newly inserted measures to 4/4.
+            // Restore the original meter in the original first measure, now
+            // measure 3, then set the two new measures to 4/4.
             cursor.rewind(Cursor.SCORE_START);
             cursor.nextMeasure();
             cursor.nextMeasure();
@@ -65,8 +68,17 @@ MuseScore {
             curScore.endCmd();
         }
 
-        // Close this plugin after the undoable score command has finished.
-        // In MuseScore 4, quit() closes the plugin; Qt.quit() may close MuseScore.
         quit();
+    }
+
+    onRun: {
+        // Keep the dialog open; the score changes only after the button click.
+    }
+
+    FlatButton {
+        anchors.centerIn: parent
+        text: "Einzählen einfügen"
+        accentButton: true
+        onClicked: root.insertCountIn()
     }
 }
