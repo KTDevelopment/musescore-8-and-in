@@ -1,15 +1,16 @@
 import QtQuick 2.15
 import MuseScore 3.0
+import Muse.Ui
 import Muse.UiComponents
 
 MuseScore {
     id: root
     width: 460
-    height: 260
+    height: 330
     title: "8AndIn"
 
     menuPath: "Plugins.8AndIn"
-    description: "Fügt zwei 4/4-Takte und das bisherige Anfangstempo ein."
+    description: "Fügt zwei Takte in der gewählten Taktart und das bisherige Anfangstempo ein."
     version: "1.0"
     pluginType: "dialog"
 
@@ -26,6 +27,8 @@ MuseScore {
         const originalTimeSig = cursor.measure.timesigNominal;
         const originalNumerator = originalTimeSig.numerator;
         const originalDenominator = originalTimeSig.denominator;
+        const countInNumerator = parseInt(numeratorInput.currentValue, 10);
+        const countInDenominator = parseInt(denominatorInput.currentValue, 10);
 
         curScore.startCmd();
         try {
@@ -46,7 +49,7 @@ MuseScore {
             }
 
             // Restore the original meter in the original first measure, now
-            // measure 3, then set the two new measures to 4/4.
+            // measure 3, then set the two new measures to the chosen meter.
             cursor.rewind(Cursor.SCORE_START);
             cursor.nextMeasure();
             cursor.nextMeasure();
@@ -56,7 +59,7 @@ MuseScore {
 
             cursor.rewind(Cursor.SCORE_START);
             const timeSig = newElement(Element.TIMESIG);
-            timeSig.timesig = fraction(4, 4);
+            timeSig.timesig = fraction(countInNumerator, countInDenominator);
             cursor.add(timeSig);
 
             cursor.rewind(Cursor.SCORE_START);
@@ -135,6 +138,58 @@ MuseScore {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.WordWrap
+            }
+        }
+
+        Row {
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 10
+
+            Text {
+                text: "Taktart:"
+                font.pixelSize: 18
+                color: "#ffffff"
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            StyledDropdown {
+                id: numeratorInput
+                model: [
+                    { "text": "1", "value": 1 }, { "text": "2", "value": 2 },
+                    { "text": "3", "value": 3 }, { "text": "4", "value": 4 },
+                    { "text": "5", "value": 5 }, { "text": "6", "value": 6 },
+                    { "text": "7", "value": 7 }, { "text": "8", "value": 8 },
+                    { "text": "9", "value": 9 }, { "text": "10", "value": 10 },
+                    { "text": "11", "value": 11 }, { "text": "12", "value": 12 },
+                    { "text": "13", "value": 13 }, { "text": "14", "value": 14 },
+                    { "text": "15", "value": 15 }, { "text": "16", "value": 16 }
+                ]
+                currentIndex: 3
+                width: 76
+                onActivated: function(index, _) {
+                    currentIndex = index
+                }
+            }
+
+            Text {
+                text: "/"
+                font.pixelSize: 22
+                color: "#ffffff"
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            StyledDropdown {
+                id: denominatorInput
+                model: [
+                    { "text": "2", "value": 2 }, { "text": "4", "value": 4 },
+                    { "text": "8", "value": 8 }, { "text": "16", "value": 16 },
+                    { "text": "32", "value": 32 }
+                ]
+                currentIndex: 1
+                width: 76
+                onActivated: function(index, _) {
+                    currentIndex = index
+                }
             }
         }
 
