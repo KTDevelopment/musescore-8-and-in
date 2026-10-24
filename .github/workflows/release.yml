@@ -34,9 +34,20 @@ jobs:
             exit 1
           fi
 
+          release_notes="$RUNNER_TEMP/8andin-release-notes.md"
+          {
+            cat RELEASE_NOTES.md
+            printf '\n\n---\n\n'
+            cat INSTALLATION.md
+          } > "$release_notes"
+
+          release_archive="$RUNNER_TEMP/8AndIn-${version}.zip"
+          zip -j "$release_archive" \
+            8AndIn.qml README.md INSTALLATION.md RELEASE_NOTES.md VERSION LICENSE
+
           gh release create "$tag" \
-            8AndIn.qml README.md VERSION \
+            "$release_archive" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
             --title "8AndIn ${version}" \
-            --notes "Automated release from branch relase. Version: ${version}."
+            --notes-file "$release_notes"

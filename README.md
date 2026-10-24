@@ -12,15 +12,16 @@
 
 ## Installation
 
-1. Kopiere `8AndIn.qml` in den MuseScore-Plugin-Ordner. Der Standardordner ist:
+1. Lade das ZIP des gewünschten GitHub-Releases herunter und entpacke es. Es enthält das Plugin, die Dokumentation, die Versionsdatei, die Release-Notes und die Lizenz.
+2. Kopiere `8AndIn.qml` aus dem entpackten Ordner in den MuseScore-Plugin-Ordner. Der Standardordner ist:
    - macOS: `~/Documents/MuseScore4/Plugins`
    - Windows: `~/Documents/MuseScore4/Plugins`
    - Linux: `~/Documents/MuseScore4/Plugins`
-2. Starte MuseScore Studio neu, damit das Plugin geladen wird.
-3. Öffne **Home → Plugins** oder **Plugins → Plugin-Manager**.
-4. Aktiviere **8AndIn**.
-5. Öffne eine Partitur und starte das Plugin über **Plugins → 8AndIn**.
+3. Starte MuseScore Studio neu, damit das Plugin geladen wird.
+4. Öffne **Home → Plugins** oder **Plugins → Plugin-Manager**.
+5. Aktiviere **8AndIn**.
+6. Öffne eine Partitur und starte das Plugin über **Plugins → 8AndIn**.
 
 ## GitHub-Releases
 
-Der Workflow `.github/workflows/release.yml` erstellt bei jedem Push auf den Branch `relase` automatisch ein GitHub-Release. Der Release-Tag und -Titel verwenden exakt die Version aus `VERSION` (zum Beispiel `1.0.0`), ohne Commit-Hash. Erhöhe `VERSION` vor jedem Push, der ein neues Release erzeugen soll; eine bereits veröffentlichte Version führt zu einem fehlgeschlagenen Workflow. Das Release enthält `8AndIn.qml`, diese README und die Versionsdatei.
+Der Workflow `.github/workflows/release.yml` erstellt bei jedem Push auf den Branch `relase` automatisch ein GitHub-Release. Der Release-Tag und -Titel verwenden exakt die Version aus `VERSION` (zum Beispiel `1.0.0`), ohne Commit-Hash. Erhöhe `VERSION` vor jedem Push, der ein neues Release erzeugen soll; eine bereits veröffentlichte Version führt zu einem fehlgeschlagenen Workflow. Bearbeite vor dem Push `RELEASE_NOTES.md` und bei Bedarf `INSTALLATION.md`; der Workflow fügt beide Dateien zur Release-Beschreibung zusammen. Als einziges Release-Asset wird `8AndIn-<VERSION>.zip` angehängt. Es enthält Plugin, Dokumentation, Release-Notes, Versionsdatei und Lizenz.

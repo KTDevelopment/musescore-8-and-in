@@ -215,7 +215,7 @@ MuseScore {
             Text {
                 anchors.fill: parent
                 anchors.margins: 8
-                text: "Bitte speichere deine Partitur vor dem Einfügen (⌘S). Das Plugin kann ungespeicherte Änderungen nicht erkennen."
+                text: "Bitte speichere deine Partitur vor dem Einfügen (⌘S)."
                 color: "#d7d9dc"
                 font.pixelSize: 14
                 horizontalAlignment: Text.AlignHCenter
