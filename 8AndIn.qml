@@ -71,14 +71,63 @@ MuseScore {
         quit();
     }
 
+    function removeCountIn() {
+        if (!curScore) {
+            quit();
+            return;
+        }
+
+        // The third measure is the original first measure. Select the time
+        // from the score start up to (but not including) that measure.
+        const firstMeasure = curScore.firstMeasure;
+        const secondMeasure = firstMeasure ? firstMeasure.nextMeasure : null;
+        const thirdMeasure = secondMeasure ? secondMeasure.nextMeasure : null;
+        if (!thirdMeasure || !thirdMeasure.firstSegment) {
+            console.warn("Could not locate the first two measures to remove.");
+            quit();
+            return;
+        }
+
+        const startTick = firstMeasure.firstSegment.tick;
+        const endTick = thirdMeasure.firstSegment.tick;
+        if (!curScore.selection.selectRange(startTick, endTick, 0, curScore.nstaves)) {
+            console.warn("Could not select the first two measures.");
+            quit();
+            return;
+        }
+
+        // The action has no handler while the plugin dialog owns the UI
+        // context. Close the dialog first, then dispatch in the score context.
+        deleteRangeTimer.start();
+        quit();
+    }
+
+    Timer {
+        id: deleteRangeTimer
+        interval: 250
+        repeat: false
+        onTriggered: cmd("time-delete")
+    }
+
     onRun: {
         // Keep the dialog open; the score changes only after the button click.
     }
 
-    FlatButton {
+    Column {
         anchors.centerIn: parent
-        text: "Einzählen einfügen"
-        accentButton: true
-        onClicked: root.insertCountIn()
+        spacing: 12
+
+        FlatButton {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Einzählen einfügen"
+            accentButton: true
+            onClicked: root.insertCountIn()
+        }
+
+        FlatButton {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: "Einzählen entfernen"
+            onClicked: root.removeCountIn()
+        }
     }
 }
