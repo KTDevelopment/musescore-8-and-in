@@ -1,32 +1,21 @@
-# MuseScore Bulk Export
+# MuseScore-Plugin 8AndIn
 
-Ein MuseScore-Studio-4-Plugin zum Exportieren eines geöffneten Scores und seiner bereits angelegten Stimmauszüge als PDF und MP3.
+**8AndIn** ist ein Plugin für MuseScore Studio 4. Es ergänzt den Anfang einer Partitur um zwei 4/4-Takte und setzt das bisherige Anfangstempo an den neuen Partituranfang.
 
-## Ausgabe
+## Funktionen
 
-Im gewählten Exportordner wird folgende Struktur erstellt. Standardmäßig wird `Export` neben der zuletzt geöffneten passenden Score-Datei vorgeschlagen; der Ordner kann im Plugin geändert werden:
+- **Einzählen einfügen:** Fügt zwei Takte vor dem bisherigen ersten Takt ein. Die neuen Takte erhalten 4/4. Die ursprüngliche Taktart wird ab dem bisherigen ersten Takt fortgesetzt und das bisherige Anfangstempo vorne eingesetzt.
+- **Einzählen entfernen:** Soll die beiden vorderen Takte samt neuem Tempotext und 4/4-Taktart entfernen.
 
-```text
-Export/
-  _<Dateiname des Scores>.pdf
-  <Name des Stimmauszugs>.pdf
-  _Audio/
-    _<Dateiname des Scores>.mp3
-    <Name des Stimmauszugs>.mp3
-```
-
-Die Part-Dateien verwenden den von MuseScore im Stimmauszug hinterlegten Namen. Der Score wird direkt über MuseScores Plugin-API exportiert. Für die Stimmauszüge erstellt das Plugin kurzzeitig eine Score-Kopie des aktuell geöffneten Inhalts und lässt MuseScore daraus die Part-Dateien rendern, da `writeScore()` nur den ausgewählten Score schreiben kann. Die Liste zuletzt geöffneter Dateien dient nur dazu, den Exportordner vorzubelegen, falls die Plugin-API keinen Score-Pfad liefert.
+> **Vor dem Einfügen speichern:** Speichere die Partitur mit **⌘S**. Das Plugin kann nicht erkennen, ob Änderungen ungespeichert sind.
 
 ## Installation
 
-1. `8AndIn.qml` in den MuseScore-Plugin-Ordner kopieren.
-2. MuseScore Studio neu starten.
-3. Im Plugin-Manager **Bulk export** aktivieren und anschließend über **Plugins → Bulk export** starten.
-
-Typische Plugin-Ordner sind `~/Documents/MuseScore4/Plugins` unter macOS und Windows oder `~/.local/share/MuseScore/MuseScore4/Plugins` unter Linux.
-
-## Hinweise
-
-- Wenn kein passender Eintrag in der Liste zuletzt geöffneter Dateien gefunden wird, kann der Exportordner manuell eingetragen werden.
-- MP3-Rendering kann abhängig von Score-Länge und Soundprofil einige Zeit beanspruchen.
-- Vorhandene Dateien mit denselben Namen werden beim Export überschrieben.
+1. Kopiere `8AndIn.qml` in den MuseScore-Plugin-Ordner. Der Standardordner ist:
+   - macOS: `~/Documents/MuseScore4/Plugins`
+   - Windows: `~/Documents/MuseScore4/Plugins`
+   - Linux: `~/Documents/MuseScore4/Plugins`
+2. Starte MuseScore Studio neu, damit das Plugin geladen wird.
+3. Öffne **Home → Plugins** oder **Plugins → Plugin-Manager**.
+4. Aktiviere **8AndIn**.
+5. Öffne eine Partitur und starte das Plugin über **Plugins → 8AndIn**.
