@@ -6,7 +6,7 @@ import Muse.UiComponents
 MuseScore {
     id: root
     width: 460
-    height: 330
+    height: 370
     title: "8AndIn"
 
     menuPath: "Plugins.8AndIn"
@@ -118,27 +118,20 @@ MuseScore {
 
     Column {
         anchors.centerIn: parent
-        spacing: 14
+        spacing: 22
 
-        Rectangle {
+        Text {
             width: 420
-            height: 86
-            radius: 8
-            color: "#fff0cf"
-            border.color: "#d49a2a"
-            border.width: 2
+            text: "Fügt zwei Takte in der gewählten Taktart ein und setzt das bisherige Tempo an den Partituranfang."
+            color: "#ffffff"
+            font.pixelSize: 16
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
+        }
 
-            Text {
-                anchors.fill: parent
-                anchors.margins: 12
-                text: "Bitte speichere deine Partitur vor dem Einfügen (⌘S). Das Plugin kann ungespeicherte Änderungen nicht erkennen."
-                color: "#49350b"
-                font.pixelSize: 18
-                font.bold: true
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                wrapMode: Text.WordWrap
-            }
+        Item {
+            width: 1
+            height: 6
         }
 
         Row {
@@ -204,6 +197,31 @@ MuseScore {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Einzählen entfernen"
             onClicked: root.removeCountIn()
+        }
+
+        Item {
+            width: 1
+            height: 8
+        }
+
+        Rectangle {
+            width: 420
+            height: 58
+            radius: 6
+            color: "#3a3f45"
+            border.color: "#62676d"
+            border.width: 1
+
+            Text {
+                anchors.fill: parent
+                anchors.margins: 8
+                text: "Bitte speichere deine Partitur vor dem Einfügen (⌘S). Das Plugin kann ungespeicherte Änderungen nicht erkennen."
+                color: "#d7d9dc"
+                font.pixelSize: 14
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                wrapMode: Text.WordWrap
+            }
         }
     }
 }
