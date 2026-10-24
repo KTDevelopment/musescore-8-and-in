@@ -1,0 +1,42 @@
+name: Publish 8AndIn release
+
+on:
+  push:
+    branches:
+      - release
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out commit
+        uses: actions/checkout@v4
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          version="$(tr -d '[:space:]' < VERSION)"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "VERSION must contain a semantic version such as 1.0.0; got: $version" >&2
+            exit 1
+          fi
+
+          tag="$version"
+
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $tag already exists. Increase VERSION before pushing another release commit." >&2
+            exit 1
+          fi
+
+          gh release create "$tag" \
+            8AndIn.qml README.md VERSION \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "8AndIn ${version}" \
+            --notes "Automated release from branch relase. Version: ${version}."

@@ -20,3 +20,7 @@
 3. Öffne **Home → Plugins** oder **Plugins → Plugin-Manager**.
 4. Aktiviere **8AndIn**.
 5. Öffne eine Partitur und starte das Plugin über **Plugins → 8AndIn**.
+
+## GitHub-Releases
+
+Der Workflow `.github/workflows/release.yml` erstellt bei jedem Push auf den Branch `relase` automatisch ein GitHub-Release. Der Release-Tag und -Titel verwenden exakt die Version aus `VERSION` (zum Beispiel `1.0.0`), ohne Commit-Hash. Erhöhe `VERSION` vor jedem Push, der ein neues Release erzeugen soll; eine bereits veröffentlichte Version führt zu einem fehlgeschlagenen Workflow. Das Release enthält `8AndIn.qml`, diese README und die Versionsdatei.
