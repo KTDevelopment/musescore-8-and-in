@@ -4,11 +4,11 @@ import Muse.UiComponents
 
 MuseScore {
     id: root
-    width: 360
-    height: 140
-    title: "Einzählen einfügen"
+    width: 460
+    height: 260
+    title: "8AndIn"
 
-    menuPath: "Plugins.2 Takte und Tempo am Anfang"
+    menuPath: "Plugins.8AndIn"
     description: "Fügt zwei 4/4-Takte und das bisherige Anfangstempo ein."
     version: "1.0"
     pluginType: "dialog"
@@ -115,7 +115,28 @@ MuseScore {
 
     Column {
         anchors.centerIn: parent
-        spacing: 12
+        spacing: 14
+
+        Rectangle {
+            width: 420
+            height: 86
+            radius: 8
+            color: "#fff0cf"
+            border.color: "#d49a2a"
+            border.width: 2
+
+            Text {
+                anchors.fill: parent
+                anchors.margins: 12
+                text: "Bitte speichere deine Partitur vor dem Einfügen (⌘S). Das Plugin kann ungespeicherte Änderungen nicht erkennen."
+                color: "#49350b"
+                font.pixelSize: 18
+                font.bold: true
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                wrapMode: Text.WordWrap
+            }
+        }
 
         FlatButton {
             anchors.horizontalCenter: parent.horizontalCenter
