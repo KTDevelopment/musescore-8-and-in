@@ -6,13 +6,31 @@ import Muse.UiComponents
 MuseScore {
     id: root
     width: 460
-    height: 370
+    height: 430
     title: "8AndIn"
 
     menuPath: "Plugins.8AndIn"
     description: "Fügt zwei Takte in der gewählten Taktart und das bisherige Anfangstempo ein."
     version: "1.0"
     pluginType: "dialog"
+    property string removeWarning: ""
+
+    function hasNotesInRange(startTick, endTick) {
+        const cursor = curScore.newCursor();
+        for (let track = 0; track < curScore.nstaves * 4; ++track) {
+            cursor.track = track;
+            cursor.rewindToTick(startTick);
+            while (cursor.element && cursor.tick < endTick) {
+                if (cursor.element.type === Element.CHORD) {
+                    return true;
+                }
+                if (!cursor.next()) {
+                    break;
+                }
+            }
+        }
+        return false;
+    }
 
     function insertCountIn() {
         if (!curScore) {
@@ -93,6 +111,11 @@ MuseScore {
 
         const startTick = firstMeasure.firstSegment.tick;
         const endTick = thirdMeasure.firstSegment.tick;
+        if (hasNotesInRange(startTick, endTick)) {
+            removeWarning = "In den ersten beiden Takten befinden sich Noten, daher wurden keine Takte entfernt.";
+            return;
+        }
+
         if (!curScore.selection.selectRange(startTick, endTick, 0, curScore.nstaves)) {
             console.warn("Could not select the first two measures.");
             quit();
@@ -197,6 +220,16 @@ MuseScore {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Einzählen entfernen"
             onClicked: root.removeCountIn()
+        }
+
+        Text {
+            width: 420
+            visible: root.removeWarning.length > 0
+            text: root.removeWarning
+            color: "#ffb4ab"
+            font.pixelSize: 14
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
         }
 
         Item {
