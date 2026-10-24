@@ -1,9 +1,9 @@
 ## Installation
 
-1. Download and extract `8AndIn-<VERSION>.zip` from the GitHub release. The archive includes the plugin, documentation, version, release notes, and license.
-2. Copy `8AndIn.qml` from the extracted archive into MuseScore Studio's plugin folder:
+1. Download `8AndIn-<VERSION>.zip` from the GitHub release and extract it.
+2. Move or copy the extracted folder into MuseScore Studio's plugin folder:
    - macOS: `~/Documents/MuseScore4/Plugins`
-   - Windows: `~/Documents/MuseScore4/Plugins`
+   - Windows: `%HOMEPATH%\Documents\MuseScore4\Plugins`
    - Linux: `~/Documents/MuseScore4/Plugins`
 3. Restart MuseScore Studio so it loads the plugin.
 4. Open **Home → Plugins** or **Plugins → Plugin Manager**.

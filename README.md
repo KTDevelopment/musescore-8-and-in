@@ -12,10 +12,10 @@
 
 ## Installation
 
-1. Lade das ZIP des gewünschten GitHub-Releases herunter und entpacke es. Es enthält das Plugin, die Dokumentation, die Versionsdatei, die Release-Notes und die Lizenz.
-2. Kopiere `8AndIn.qml` aus dem entpackten Ordner in den MuseScore-Plugin-Ordner. Der Standardordner ist:
+1. Lade `8AndIn-<VERSION>.zip` aus dem gewünschten GitHub-Release herunter und entpacke es.
+2. Verschiebe oder kopiere den entpackten Ordner in den MuseScore-Plugin-Ordner:
    - macOS: `~/Documents/MuseScore4/Plugins`
-   - Windows: `~/Documents/MuseScore4/Plugins`
+   - Windows: `%HOMEPATH%\Documents\MuseScore4\Plugins`
    - Linux: `~/Documents/MuseScore4/Plugins`
 3. Starte MuseScore Studio neu, damit das Plugin geladen wird.
 4. Öffne **Home → Plugins** oder **Plugins → Plugin-Manager**.
@@ -24,4 +24,9 @@
 
 ## GitHub-Releases
 
-Der Workflow `.github/workflows/release.yml` erstellt bei jedem Push auf den Branch `relase` automatisch ein GitHub-Release. Der Release-Tag und -Titel verwenden exakt die Version aus `VERSION` (zum Beispiel `1.0.0`), ohne Commit-Hash. Erhöhe `VERSION` vor jedem Push, der ein neues Release erzeugen soll; eine bereits veröffentlichte Version führt zu einem fehlgeschlagenen Workflow. Bearbeite vor dem Push `RELEASE_NOTES.md` und bei Bedarf `INSTALLATION.md`; der Workflow fügt beide Dateien zur Release-Beschreibung zusammen. Als einziges Release-Asset wird `8AndIn-<VERSION>.zip` angehängt. Es enthält Plugin, Dokumentation, Release-Notes, Versionsdatei und Lizenz.
+Der Workflow `.github/workflows/release.yml` erstellt bei jedem Push auf den Branch `relase` automatisch ein GitHub-Release. 
+Der Release-Tag und -Titel verwenden exakt die Version aus `VERSION` (zum Beispiel `1.0.0`), ohne Commit-Hash. 
+Erhöhe `VERSION` vor jedem Push, der ein neues Release erzeugen soll; eine bereits veröffentlichte Version führt zu einem fehlgeschlagenen Workflow. 
+Bearbeite vor dem Push `RELEASE_NOTES.md` und bei Bedarf `INSTALLATION.md`; der Workflow fügt beide Dateien zur Release-Beschreibung zusammen. 
+Als einziges Release-Asset wird `8AndIn-<VERSION>.zip` angehängt. 
+Es enthält Plugin, Dokumentation, Release-Notes, Versionsdatei und Lizenz.
